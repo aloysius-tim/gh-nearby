@@ -1,0 +1,5 @@
+<div id="page-content-wrapper">
+  <sebm-google-map [latitude]="selectedUser.latitude" [longitude]="selectedUser.longitude">
+    <sebm-google-map-marker *ngFor="let user of users" [latitude]="user.latitude" [longitude]="user.longitude"></sebm-google-map-marker>
+  </sebm-google-map>
+</div>

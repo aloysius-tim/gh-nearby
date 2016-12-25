@@ -10,6 +10,17 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AgmCoreModule} from "angular2-google-maps/core";
 import { UserComponent } from './menu/user/user.component';
 import {UsersService} from "./shared/users.service";
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import {AngularFireModule} from "angularfire2";
+
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyCzoEl2F3S_DtCHydZeICkQkEF2U6OG91E",
+  authDomain: "gh-nearby-1481727452580.firebaseapp.com",
+  databaseURL: "https://gh-nearby-1481727452580.firebaseio.com",
+  storageBucket: "gh-nearby-1481727452580.appspot.com",
+  messagingSenderId: "113897804853"
+};
 
 @NgModule({
   declarations: [
@@ -28,7 +39,9 @@ import {UsersService} from "./shared/users.service";
       libraries: ["places"]
     }),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2AutoCompleteModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [UsersService],
   bootstrap: [AppComponent]

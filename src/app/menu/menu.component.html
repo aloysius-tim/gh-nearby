@@ -4,9 +4,8 @@
   <hr>
   <button class="btn btn-classic" (click)="onAddGh(content)">Add a GH</button>
   <hr>
-
   <ul>
-    <app-user *ngFor="let user of users; let i=index" [user]="user"></app-user>
+    <app-user *ngFor="let user of users" [user]="user"></app-user>
   </ul>
 </div>
 
@@ -18,22 +17,39 @@
     <h4 class="modal-title">Modal title</h4>
   </div>
   <div class="modal-body">
-    <form>
+    <form (ngSubmit)="$event.preventDefault(); onSubmit(f);" #f="ngForm">
       <div class="form-group">
         <label>Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Enter name">
+        <input [(ngModel)]="newName"
+               type="text"
+               class="form-control"
+               name="name"
+               placeholder="Enter name">
       </div>
       <div class="form-group">
         <label>Headline</label>
-        <input type="text" class="form-control" name="headline" placeholder="Enter headline">
+        <input [(ngModel)]="newHeadline"
+               type="text"
+               class="form-control"
+               name="headline"
+               placeholder="Enter headline">
       </div>
       <div class="form-group">
         <label>Position</label>
-        <input type="text" class="form-control" name="position" placeholder="Enter position">
+        <input ng2-auto-complete
+               class="form-control"
+               [(ngModel)]="newAddress"
+               [ngModelOptions]="{standalone: true}"
+               placeholder="Enter Address(min. 2 chars)"
+               [source]="googleGeoCode"
+               display-property-name="formatted_address"
+               path-to-data="results"
+               min-chars="2" />
       </div>
+      <button type="submit" class="btn btn-primary" (click)="onSubmit(f); $event.preventDefault()">Go</button>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-secondary">Close</button>
   </div>
 </template>

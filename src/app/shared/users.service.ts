@@ -1,7 +1,9 @@
 import {Injectable, EventEmitter} from '@angular/core';
 import {User} from "../menu/user";
-import {Http, Response} from "@angular/http";
+import {Http, Response, Headers} from "@angular/http";
 import 'rxjs/Rx'
+import {Observable} from "rxjs";
+import {AngularFire, FirebaseListObservable} from "angularfire2";
 
 @Injectable()
 export class UsersService {
@@ -15,7 +17,7 @@ export class UsersService {
   selectionChange = new EventEmitter<User>();
   usersChange = new EventEmitter<User[]>();
 
-  constructor(private http:Http) { }
+  constructor(private http:Http, private af: AngularFire) { }
 
   get users(): User[] {
     return this._users;
@@ -39,9 +41,18 @@ export class UsersService {
       .map((response: Response) => response.json())
       .subscribe(
         (data : User[]) => {
-          this.users=data;
+          console.log(data);
+
+          this.users=Object.values(data);
           this.usersChange.emit(this.users);
         }
-      )
+      );
+  }
+
+  addUser(user: User) {
+    const items = this.af.database.list('/users');
+    items.push(user);
+
+    this.users.push(user);
   }
 }
